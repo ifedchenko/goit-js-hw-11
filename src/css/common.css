@@ -1,0 +1,22 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.search-form {
+  display: flex;
+  justify-content: center;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-left: 0;
+  margin-right: 0;
+  background-color: cornflowerblue;
+}
+
+.search-form input {
+  border: 0;
+}
+
+.search-form button {
+  border: 0;
+}
