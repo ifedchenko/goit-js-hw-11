@@ -43,6 +43,7 @@ function onSearch(evt) {
 
         refs.buttonMore.classList.remove('is-hidden');
       } else {
+        refs.buttonMore.classList.add('is-hidden');
         Notify.failure(
           'Sorry, there are no images matching your search query. Please try again.'
         );
