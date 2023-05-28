@@ -4,6 +4,7 @@ export default class ImagesApiService {
   constructor() {
     this.searchQuery = '';
     this.page = 1;
+    this.perPageCount = 40;
   }
 
   async fetchImages() {
@@ -17,7 +18,7 @@ export default class ImagesApiService {
           image_type: 'photo',
           orientation: 'horizontal',
           safesearch: 'true',
-          per_page: 40,
+          per_page: this.perPageCount,
           page: this.page,
         },
       })
@@ -49,6 +50,9 @@ export default class ImagesApiService {
   //       return hits;
   //     });
   // }
+  perPage() {
+    return this.perPageCount;
+  }
 
   incrementPage() {
     this.page += 1;
