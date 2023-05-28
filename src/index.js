@@ -82,8 +82,6 @@ function onLoadMore() {
 
 function loadNextPage(hits, maxPages) {
   markupListImages(hits);
-
-  currentPage++;
   refs.buttonMore.classList.remove('is-hidden');
   if (currentPage === maxPages) {
     refs.buttonMore.classList.add('is-hidden');
@@ -91,14 +89,13 @@ function loadNextPage(hits, maxPages) {
       "We're sorry, but you've reached the end of search results."
     );
   }
+  currentPage++;
 }
 
 function markupListImages(hits) {
-  for (let i = 0; i < hits.length; i++) {
-    const hit = hits[i];
-
-    const markup = `
-      <div class="photo-card">
+  const markup = hits
+    .map(
+      hit => `<div class="photo-card">
         <a class="gallery-link" href="${hit.largeImageURL}">
           <img class="gallery-image" src="${hit.webformatURL}" alt="${hit.tags}" loading="lazy" width="300" />
           <div class="info">
@@ -108,10 +105,11 @@ function markupListImages(hits) {
             <p class="info-item"><b>Downloads</b>${hit.downloads}</p>
           </div>
         </a>
-      </div>`;
+      </div>`
+    )
+    .join('');
 
-    refs.cardsList.insertAdjacentHTML('beforeend', markup);
-  }
+  refs.cardsList.insertAdjacentHTML('beforeend', markup);
 }
 
 // old version
@@ -178,4 +176,24 @@ function markupListImages(hits) {
 //     .finally(() => {
 //       simpleLightbox.refresh();
 //     });
+// }
+// function markupListImages(hits) {
+//   for (let i = 0; i < hits.length; i++) {
+//     const hit = hits[i];
+
+//     const markup = `
+//       <div class="photo-card">
+//         <a class="gallery-link" href="${hit.largeImageURL}">
+//           <img class="gallery-image" src="${hit.webformatURL}" alt="${hit.tags}" loading="lazy" width="300" />
+//           <div class="info">
+//             <p class="info-item"><b>Likes</b>${hit.likes}</p>
+//             <p class="info-item"><b>Views</b>${hit.views}</p>
+//             <p class="info-item"><b>Comments</b>${hit.comments}</p>
+//             <p class="info-item"><b>Downloads</b>${hit.downloads}</p>
+//           </div>
+//         </a>
+//       </div>`;
+
+//     refs.cardsList.insertAdjacentHTML('beforeend', markup);
+//   }
 // }
