@@ -30,22 +30,22 @@ function onSearch(evt) {
     return Notify.warning('Please type text.');
   }
 
-  refs.cardsList.innerHTML = '';
+  refs.cardsList.textContent = '';
 
   imageApiService.resetPage();
   imageApiService
     .fetchImages()
-    .then(response => {
-      if (response.totalHits > 0) {
-        Notify.success(`Hooray! We found ${response.totalHits} images.`);
+    .then(({ hits, totalHits }) => {
+      if (totalHits > 0) {
+        Notify.success(`Hooray! We found ${totalHits} images.`);
 
-        const maxPages = Math.ceil(response.totalHits / perPage);
+        const maxPages = Math.ceil(totalHits / perPage);
         if (maxPages === 1) {
-          markupListImages(response.hits);
+          markupListImages(hits);
           refs.buttonMore.classList.add('is-hidden');
         } else {
-          currentPage = 1;
-          loadNextPage(response.hits, maxPages);
+          // currentPage = 1;
+          loadNextPage(hits, maxPages);
         }
       } else {
         refs.buttonMore.classList.add('is-hidden');
