@@ -20,6 +20,7 @@ const refs = {
 
 refs.searchForm.addEventListener('submit', onSearch);
 refs.buttonMore.addEventListener('click', onLoadMore);
+window.addEventListener('scroll', infiniteScroll);
 
 function onSearch(evt) {
   evt.preventDefault();
@@ -83,15 +84,23 @@ function onLoadMore() {
 
 function loadNextPage(hits, maxPages) {
   markupListImages(hits);
-  refs.buttonMore.classList.remove('is-hidden');
+  // refs.buttonMore.classList.remove('is-hidden');
 
   if (currentPage === maxPages) {
-    refs.buttonMore.classList.add('is-hidden');
+    // refs.buttonMore.classList.add('is-hidden');
+    window.removeEventListener('scroll', infiniteScroll);
     Notify.failure(
       "We're sorry, but you've reached the end of search results."
     );
   }
   currentPage++;
+}
+
+function infiniteScroll() {
+  const documentRect = document.documentElement.getBoundingClientRect();
+  if (documentRect.bottom < document.documentElement.clientHeight + 10) {
+    onLoadMore();
+  }
 }
 
 function markupListImages(hits) {
