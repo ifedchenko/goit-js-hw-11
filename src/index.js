@@ -70,6 +70,7 @@ function onLoadMore() {
     .fetchImages()
     .then(response => {
       loadNextPage(response.hits, Math.ceil(response.totalHits / perPage));
+      smoothScroll();
     })
     .catch(error => {
       console.log(error);
@@ -83,6 +84,7 @@ function onLoadMore() {
 function loadNextPage(hits, maxPages) {
   markupListImages(hits);
   refs.buttonMore.classList.remove('is-hidden');
+
   if (currentPage === maxPages) {
     refs.buttonMore.classList.add('is-hidden');
     Notify.failure(
@@ -110,6 +112,17 @@ function markupListImages(hits) {
     .join('');
 
   refs.cardsList.insertAdjacentHTML('beforeend', markup);
+}
+
+function smoothScroll() {
+  const { height: cardHeight } = document
+    .querySelector('.gallery')
+    .firstElementChild.getBoundingClientRect();
+
+  window.scrollBy({
+    top: cardHeight * 2.5,
+    behavior: 'smooth',
+  });
 }
 
 // old version
